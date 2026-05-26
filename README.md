@@ -3,6 +3,7 @@
 ### Resources:
 
 - Favicon by <a href="https://www.svgrepo.com" target="_blank">SVG Repo</a>
+- Spinner: <a></a>
 
 ### Tasks
 
