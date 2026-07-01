@@ -15,7 +15,6 @@ const characters = ['Daredevil', 'Cyclops', 'Nightcrawler', 'Gambit', 'Iron Fist
 function App() {
   let chara = []
   const [characterData, setCharacterData] = useState(chara);
-  const [isLoading, setIsLoading] = useState(false);
   const [currentScore, setCurrentScore] = useState(0);
   const [bestScore, setBestScore] = useState(0);
   const [gameover, setGameover] = useState(false);
@@ -42,7 +41,6 @@ function App() {
       .catch(error => {console.error("Failed:", error)});
       setCharacterData(shuffleCards(results));
       // console.log(results);
-      setIsLoading(false);
   };
 
 
@@ -110,14 +108,13 @@ function App() {
       <Scoreboard currentScore={currentScore} bestScore={bestScore}/>
     </header>
     <main>
-      {isLoading ? ( <Spinner /> ) : 
-      (<div className='memory-card-deck'>
+      {characterData !== chara && <div className='memory-card-deck'>
         {characterData.map(char => {
           return (
             <Card img={char.img} name={char.id} key={char.id} id={char.id} handler={handleCardClick}/>
           )
         })}
-      </div>)} 
+      </div>}
     </main>
     </>
   )

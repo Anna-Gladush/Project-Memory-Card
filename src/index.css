@@ -38,11 +38,12 @@
 .card {
   text-align: center;
   font-size: 1.7em;
-
 }
 .card img {
   cursor: pointer;
   border-radius: 20px;
+  height: 250px;
+
 }
 button {
   border: none;

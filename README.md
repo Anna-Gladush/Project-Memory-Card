@@ -5,7 +5,6 @@
 ### Resources:
 
 - Favicon by <a href="https://www.svgrepo.com" target="_blank">SVG Repo</a>
-- Spinner: <a href="https://codepen.io/poziomq/pen/ozaYKK">simple Pacman Loader</a> by poziomq
 - Font: <a href="https://fonts.google.com/specimen/Jersey+25?preview.text=Marvel&categoryFilters=Appearance:%2FTheme%2FPixel&preview.script=Latn&specimen.preview.text=Marvel">Jersey 25</a> by Sarah Cadigan-Fried
 
 ### Tasks
