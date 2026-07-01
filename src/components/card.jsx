@@ -1,9 +1,9 @@
-const Card = ({img, name, id}) => {
+const Card = ({img, name, id, handler}) => {
   return (
-    <div className="card" id={id}>
+    <button className="card" id={id} name={name} onClick={() => handler(id)}>
       <img src={img} alt={name} />
       <p>{name}</p>
-    </div>
+    </button>
   )
 }
 

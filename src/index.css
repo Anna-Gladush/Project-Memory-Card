@@ -30,20 +30,32 @@
   margin-right: 10vw;
   display: flex;
   flex-wrap: wrap;
-  column-gap: 1vw;
-  row-gap: 2vh;
+  column-gap: 7vw;
+  row-gap: 7vh;
   justify-content: center;
 }
 
 .card {
-  /* margin: ; */
   text-align: center;
   font-size: 1.7em;
+
 }
 .card img {
-  /* width: 160px; */
-  height: max(250px, 40vh); 
-  width:  max(250px, 12vw);
   cursor: pointer;
   border-radius: 20px;
+}
+button {
+  border: none;
+  background-color: transparent;
+}
+
+.restart {
+  position: absolute;
+  left: 49vw;
+  font-size: 2.5em;
+  color: white;
+  background-color: red;
+  padding: 10px;
+  border-radius: 20px;
+  cursor: pointer;
 }

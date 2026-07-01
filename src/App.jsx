@@ -4,6 +4,9 @@ import { useEffect, useState } from 'react'
 import Card from './components/card'
 import Spinner from "./components/spinner"
 import Scoreboard from './components/scoreboard'
+import Confetti from 'react-confetti'
+
+import mock from "./mock.json"
 
 // There should be a function that displays the cards in a random order anytime a user clicks one. Be sure to invoke that function when the component mounts.
 
@@ -28,8 +31,7 @@ function App() {
     return new_arr
   }
 
-  const getCharacterData = async () => {
-    setIsLoading(true);
+  const getCharacterData = () => {
     const promises = characters.map((char) => 
       fetch(`https://comicvine.gamespot.com/api/characters/?api_key=6b255a47b25c88227c57121c75356c59ae586b71&field_list=name,image&limit=1&filter=name:${char}&format=json`)
       .then((res) => 
@@ -38,8 +40,8 @@ function App() {
         data: data.results[0],
         flipped: 'no'
       })))
-      const results = await Promise.all(promises)
-      .catch(error => console.error("Failed:", error));
+      const results = Promise.all(promises)
+      .catch(error => {console.error("Failed:", error)});
       setCharacterData(shuffleCards(results));
       console.log(results);
       setIsLoading(false);
@@ -47,18 +49,66 @@ function App() {
 
 
 
-  const handleCardClick = () => {
+  const handleCardClick = (id) => {
+    if (gameover) return 
     
+    const char = characterData.filter(data => data.id === id)
+    const rest = characterData.filter(data => data.id !== id)
+
+    if (char[0].flipped == "yes") {
+      const flip = characterData.map(ch => {
+        ch.flipped = "no"
+        return ch
+      })
+      setCurrentScore(0)
+      setCharacterData(shuffleCards(flip))
+      return
+    }
+
+    setCurrentScore(prev => prev + 1)
+    setBestScore(prev => prev > currentScore ? prev : currentScore + 1)
+
+    char[0].flipped = "yes"
+    rest.push(char[0])
+
+    if (currentScore + 1 === 12) {
+      setGameover(true)
+    }
+    setCharacterData(shuffleCards(rest))
+    // setBestScore()
+  }
+  
+  const restart = () => {
+    setCurrentScore(0)
+    setCharacterData(shuffleCards(characterData))
+    setGameover(false)
   }
 
-
-
-  useEffect(() => {   
-    getCharacterData()
+  // SINCE WE HAVE TROUBLE WITH CORS WE WILL USE mock.js
+  useEffect(() => {
+    const results = mock.map(item => {
+      return {
+        img: item.data.image.small_url,
+        id: item.data.name,
+        flipped: 'no',
+      }
+    })
+    setCharacterData(shuffleCards(results))
+    console.log(results)
   }, [])
 
   return (
     <>
+    {gameover && 
+    (<>
+    <Confetti 
+      recycle={false}
+      numberOfPieces={1000}
+      colors={['#f44336','#e91e63','#673ab7','#3f51b5','#2196f3','#009688','#4CAF50','#FFEB3B','#FFC107','#FF9800','#FF5722']}
+      />
+      <button className='restart' onClick={restart}>Restart</button>
+      </>)}
+
     <header>
       {/* SCOREBOARD */}
       <Scoreboard currentScore={currentScore} bestScore={bestScore}/>
@@ -68,7 +118,7 @@ function App() {
       (<div className='memory-card-deck'>
         {characterData.map(char => {
           return (
-            <Card img={char.data.image.original_url} name={char.data.name} key={char.data.id} id={char.data.id} onClick={handleCardClick}/>
+            <Card img={char.img} name={char.id} key={char.id} id={char.id} handler={handleCardClick}/>
           )
         })}
       </div>)} 
