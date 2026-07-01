@@ -8,10 +8,8 @@ import Confetti from 'react-confetti'
 
 import mock from "./mock.json"
 
-// There should be a function that displays the cards in a random order anytime a user clicks one. Be sure to invoke that function when the component mounts.
+const API_KEY = import.meta.env.API_KEY;
 
-// const API_KEY = import.meta.env.API_KEY;
-// const API_BASE_URL = `http://www.comicvine.com/api/`
 const characters = ['Daredevil', 'Cyclops', 'Nightcrawler', 'Gambit', 'Iron Fist', 'Hawkeye', 'Emma Frost', 'Storm', 'Jubilee', 'Jessica Jones', 'Kate Bishop', 'Linda Carter'];
 
 function App() {
@@ -33,7 +31,7 @@ function App() {
 
   const getCharacterData = () => {
     const promises = characters.map((char) => 
-      fetch(`https://comicvine.gamespot.com/api/characters/?api_key=6b255a47b25c88227c57121c75356c59ae586b71&field_list=name,image&limit=1&filter=name:${char}&format=json`)
+      fetch(`https://comicvine.gamespot.com/api/characters/?api_key=${API_KEY}&field_list=name,image&limit=1&filter=name:${char}&format=json`)
       .then((res) => 
         res.json()
       ).then((data) => ({
@@ -43,7 +41,7 @@ function App() {
       const results = Promise.all(promises)
       .catch(error => {console.error("Failed:", error)});
       setCharacterData(shuffleCards(results));
-      console.log(results);
+      // console.log(results);
       setIsLoading(false);
   };
 
@@ -51,7 +49,7 @@ function App() {
 
   const handleCardClick = (id) => {
     if (gameover) return 
-    
+
     const char = characterData.filter(data => data.id === id)
     const rest = characterData.filter(data => data.id !== id)
 
@@ -75,7 +73,6 @@ function App() {
       setGameover(true)
     }
     setCharacterData(shuffleCards(rest))
-    // setBestScore()
   }
   
   const restart = () => {
@@ -94,7 +91,6 @@ function App() {
       }
     })
     setCharacterData(shuffleCards(results))
-    console.log(results)
   }, [])
 
   return (

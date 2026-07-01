@@ -1,5 +1,7 @@
 # Memory Card
 
+![expample](https://github.com/Anna-Gladush/Project-Memory-Card/tree/main/src/assets/2026-07-01.png)
+
 ### Resources:
 
 - Favicon by <a href="https://www.svgrepo.com" target="_blank">SVG Repo</a>
